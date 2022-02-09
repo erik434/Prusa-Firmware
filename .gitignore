@@ -50,9 +50,10 @@ Firmware/Doc
 /lang/text.sym
 /lang/textaddr.txt
 /build-env/
-/Firmware/Firmware.vcxproj
+/Firmware/Firmware.vcxproj*
 /Firmware/Configuration_prusa_bckp.h
 /Firmware/variants/printers.h
+Firmware/.vs/
 Configuration.tmp
 config.tmp
 /lang/lang_en.max
