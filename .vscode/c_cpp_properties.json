@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/*",
+                "${workspaceFolder}/Firmware/*",
+                "${workspaceFolder}/../PF-build-env-1.0.6.1/hardware/tools/avr/avr/include",
+                "${workspaceFolder}/../PF-build-env-1.0.6.1/hardware/PrusaResearchRambo/avr/cores/rambo",
+                "${workspaceFolder}/../PF-build-env-1.0.6.1/hardware/PrusaResearchRambo/avr/variants/rambo",
+            ],
+            "defines": ["ARDUINO=100"],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
