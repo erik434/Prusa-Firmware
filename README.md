@@ -1,3 +1,5 @@
+My personal fork of Prusa firmware to customize my MK3s.
+
 # Prusa Firmware MK3 (with MeatPack Support, v1.1.0)
 
 ### NOTE:
