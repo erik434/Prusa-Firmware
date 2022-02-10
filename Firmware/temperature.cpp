@@ -2215,15 +2215,9 @@ static bool bCheckingOnBed=false;                 // state variable, which allow
 #ifdef AMBIENT_THERMISTOR
 #ifdef AMBIENT_MINTEMP
 check_min_temp_ambient();
-#endif
-#if AMBIENT_RAW_LO_TEMP > AMBIENT_RAW_HI_TEMP
-if(current_temperature_raw_ambient>(OVERSAMPLENR*MINTEMP_MINAMBIENT_RAW)) // thermistor is NTC type
-#else
-if(current_temperature_raw_ambient=<(OVERSAMPLENR*MINTEMP_MINAMBIENT_RAW))
-#endif
-     {                                            // ambient temperature is low
+#endif //AMBIENT_MINTEMP
 #endif //AMBIENT_THERMISTOR
-// *** 'common' part of code for MK2.5 & MK3
+
 // * nozzle checking
 if(target_temperature[active_extruder]>minttemp[active_extruder])
      {                                            // ~ nozzle heating is on
@@ -2252,14 +2246,6 @@ else {                                            // ~ bed heating is off
      oTimer4minTempBed.start();
      bCheckingOnBed=false;
      }
-// *** end of 'common' part
-#ifdef AMBIENT_THERMISTOR
-     }
-else {                                            // ambient temperature is standard
-     check_min_temp_heater0();
-     check_min_temp_bed();
-     }
-#endif //AMBIENT_THERMISTOR
 }
  
 #if (defined(FANCHECK) && defined(TACH_0) && (TACH_0 > -1))
