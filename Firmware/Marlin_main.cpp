@@ -467,7 +467,7 @@ AutoReportFeatures autoReportFeatures;
 static void get_arc_coordinates();
 static bool setTargetedHotend(int code, uint8_t &extruder);
 static void print_time_remaining_init();
-static void wait_for_heater(long codenum, uint8_t extruder);
+static void wait_for_heater(long codenum, uint8_t extruder, bool CooldownNoWait);
 static void gcode_G28(bool home_x_axis, bool home_y_axis, bool home_z_axis);
 static void gcode_M105(uint8_t extruder);
 
@@ -6986,17 +6986,16 @@ This G-code will be performed at the end of a calibration script.
 
       #### Parameters (not mandatory)
 
-      - `S` - Set extruder temperature
-        - `R` - Set extruder temperature
+      - `S` - Set extruder temperature and wait for heating
+      - `R` - Set extruder temperature and wait for heating or cooling
       - `B` - Set max. extruder temperature, while `S` is min. temperature. Not active in default, only if AUTOTEMP is defined in source code.
 
-      Parameters S and R are treated identically.
-      Command always waits for both cool down and heat up.
       If no parameters are supplied waits for previously set extruder temperature.
       */
       case 109:
       {
         uint8_t extruder;
+        bool CooldownNoWait = false;
         if (setTargetedHotend(109, extruder))
         {
           break;
@@ -7014,6 +7013,7 @@ This G-code will be performed at the end of a calibration script.
         if (code_seen('S'))
         {
           setTargetHotendSafe(code_value(), extruder);
+          CooldownNoWait = true;
         }
         else if (code_seen('R'))
         {
@@ -7040,7 +7040,7 @@ This G-code will be performed at the end of a calibration script.
 
         cancel_heatup = false;
 
-        wait_for_heater(codenum, extruder); // loops until target temperature is reached
+        wait_for_heater(codenum, extruder, CooldownNoWait); // loops until target temperature is reached
 
         LCD_MESSAGERPGM(_T(MSG_HEATING_COMPLETE));
         KEEPALIVE_STATE(IN_HANDLER);
@@ -10999,7 +10999,7 @@ void delay_keep_alive(unsigned int ms)
   }
 }
 
-static void wait_for_heater(long codenum, uint8_t extruder)
+static void wait_for_heater(long codenum, uint8_t extruder, bool CooldownNoWait)
 {
   if (!degTargetHotend(extruder))
     return;
@@ -12491,7 +12491,7 @@ void restore_print_from_ram_and_continue(float e_move)
   {
     setTargetHotendSafe(saved_extruder_temperature, saved_active_extruder);
     heating_status = 1;
-    wait_for_heater(_millis(), saved_active_extruder);
+    wait_for_heater(_millis(), saved_active_extruder, false);
     heating_status = 2;
   }
   axis_relative_modes ^= (-saved_extruder_relative_mode ^ axis_relative_modes) & E_AXIS_MASK;
