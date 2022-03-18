@@ -3650,7 +3650,7 @@ int8_t lcd_show_fullscreen_message_yes_no_and_wait_P(const char *msg, bool allow
 	unsigned long previous_millis_cmd = _millis();
 	int8_t        enc_dif = lcd_encoder_diff;
 	lcd_consume_click();
-	KEEPALIVE_STATE(PAUSED_FOR_USER);
+	KEEPALIVE_STATE(PAUSED_FOR_USER_2);
 	for (;;) {
 		if (allow_timeouting && _millis() - previous_millis_cmd > LCD_TIMEOUT_TO_STATUS)
 		{
@@ -5972,7 +5972,7 @@ uint8_t choose_menu_P(const char *header, const char *item, const char *last_ite
 	
 	lcd_clear();
 
-	KEEPALIVE_STATE(PAUSED_FOR_USER);
+	KEEPALIVE_STATE(PAUSED_FOR_USER_2);
 	while (1)
 	{
 		manage_heater();

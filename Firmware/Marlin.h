@@ -459,6 +459,7 @@ extern uint8_t calc_percent_done();
 #define IN_PROCESS        3
 #define PAUSED_FOR_USER   4
 #define PAUSED_FOR_INPUT  5
+#define PAUSED_FOR_USER_2 6 // Same as PAUSED_FOR_USER but with a different message so Octoprint can tell them apart
 
 #define KEEPALIVE_STATE(n) do { busy_state = n;} while (0)
 extern void host_keepalive();
