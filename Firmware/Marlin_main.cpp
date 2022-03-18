@@ -1999,6 +1999,10 @@ void host_keepalive()
       SERIAL_ECHO_START;
       SERIAL_ECHOLNPGM("busy: paused for input");
       break;
+    case PAUSED_FOR_USER_2:
+      SERIAL_ECHO_START;
+      SERIAL_ECHOLNPGM("busy: paused : user");
+      break;
     default:
       break;
     }
@@ -4016,7 +4020,7 @@ static void gcode_M600(bool automatic, float x_position, float y_position, float
 
   if (!mmu_enabled)
   {
-    KEEPALIVE_STATE(PAUSED_FOR_USER);
+    KEEPALIVE_STATE(PAUSED_FOR_USER_2);
     lcd_change_fil_state = lcd_show_fullscreen_message_yes_no_and_wait_P(_i("Was filament unload successful?"),
                                                                          false, true); ////MSG_UNLOAD_SUCCESSFUL c=20 r=2
     if (lcd_change_fil_state == 0)
@@ -12631,7 +12635,7 @@ void M600_check_state(float nozzle_temp)
   while (lcd_change_fil_state != 1)
   {
     lcd_change_fil_state = 0;
-    KEEPALIVE_STATE(PAUSED_FOR_USER);
+    KEEPALIVE_STATE(PAUSED_FOR_USER_2);
     lcd_alright();
     KEEPALIVE_STATE(IN_HANDLER);
     switch (lcd_change_fil_state)
@@ -12669,7 +12673,7 @@ void M600_check_state(float nozzle_temp)
 void M600_wait_for_user(float HotendTempBckp)
 {
 
-  KEEPALIVE_STATE(PAUSED_FOR_USER);
+  KEEPALIVE_STATE(PAUSED_FOR_USER_2);
 
   int counterBeep = 0;
   unsigned long waiting_start_time = _millis();
@@ -12785,7 +12789,7 @@ void M600_load_filament()
   lcd_wait_interact();
 
   // load_filament_time = _millis();
-  KEEPALIVE_STATE(PAUSED_FOR_USER);
+  KEEPALIVE_STATE(PAUSED_FOR_USER_2);
 
 #ifdef PAT9125
   fsensor_autoload_check_start();
