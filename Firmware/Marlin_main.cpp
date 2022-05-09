@@ -7073,8 +7073,8 @@ This G-code will be performed at the end of a calibration script.
 
       #### Parameters (not mandatory)
 
-      - `S` - Set extruder temperature and wait for heating
-        - `R` - Set extruder temperature and wait for heating or cooling
+       - `S` - Set bed temperature and wait for heating
+       - `R` - Set bed temperature and wait for heating or cooling
 
       If no parameter is supplied, waits for heating or cooling to previously set temperature.
     */
@@ -11026,6 +11026,7 @@ static void wait_for_heater(long codenum, uint8_t extruder)
   while ((!cancel_heatup) && ((residencyStart == -1) ||
                               (residencyStart >= 0 && (((unsigned int)(_millis() - residencyStart)) < (TEMP_RESIDENCY_TIME * 1000UL)))))
   {
+    // If S was used to set the temperature (don't wait if cooling down), and we're cooling down, stop waiting!
     if ((CooldownNoWait == true) && !target_direction)
       break;
 #else
