@@ -1,7 +1,7 @@
 My personal fork of Prusa firmware to customize my MK3s.
 
-NOTES:
-Building should be as simple as running ./build.sh
+NOTES: \
+Building should be as simple as running ./build.sh \
 Firmware image will be: /home/erik/git/Prusa-Firmware/lang/firmware.hex
 
 # Prusa Firmware MK3 (with MeatPack Support, v1.1.0)
